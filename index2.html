@@ -1,0 +1,116 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+    crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+    crossorigin="anonymous"></script>
+<script>
+    $(function () {
+        $(".dropdown-item1").click(function () {
+            $('#collection').text($(this).text());
+        });
+    });
+    $(function () {
+        $(".dropdown-item2").click(function () {
+            $('#delivery').text($(this).text());
+        });
+    });
+</script>
+
+<div id="step1">
+    <h1 style="font-size: 4rem;">3 step form</h1>
+    <form action="">
+        <p id="errorName" class="text-danger" style="display:none;">Name needs to start with Capital letter and be at least 3 characters</p>
+        <input id="fName" class="form-control" placeholder="First name" style="margin-bottom:1rem;height: 4.2rem;">
+        <input class="form-control" placeholder="Last name" style="margin-bottom:1rem;height: 4.2rem;">
+        <p id="errorEmail" class="text-danger" style="display:none;">Incorrect email</p>
+        <input id="email" class="form-control" placeholder="Email" style="margin-bottom:1rem;height: 4.2rem;">
+        <input type="button" value="Continue" onclick="showStep2()" class="btn btn-primary" style="width:100%;height: 4.5rem;">
+    </form>
+</div>
+<div id="step2" style="display:none;">
+    <h1 style="font-size: 4rem;">Step 2</h1>
+    <form action="">
+        <input class="form-control" placeholder="Collection City" style="margin-bottom:1rem;height: 4.2rem;">
+        <p id="errorCCountry" class="text-danger" style="display:none;">Please choose a country</p>
+        <div class="btn-group" style="width:100%;margin-bottom: 1rem;">
+            <button type="button" id="collection" class="btn btn-default dropdown-toggle btn-block" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false" style="height: 4.2rem;">
+                Choose Collection Country ▼
+            </button>
+            <div class="dropdown-menu" style="width: 100%;">
+                <button class="dropdown-item1 btn-block" type="button">Action</button>
+                <button class="dropdown-item1 btn-block" type="button">Another action</button>
+                <button class="dropdown-item1 btn-block" type="button">Something else here</button>
+            </div>
+        </div>
+        <input type="button" value="Continue" onclick="showStep3()" class="btn btn-primary" style="width:100%;height: 4.5rem;">
+    </form>
+</div>
+<div id="step3" style="display:none;">
+    <h1 style="font-size: 4rem;">Final step </h1>
+    <form action="">
+        <input class="form-control" placeholder="Delivery City" style="margin-bottom:1rem;height: 4.2rem;">
+        <p id="errorDCountry" class="text-danger" style="display:none;">Please choose a country</p>        
+        <div class="btn-group" style="width:100%;margin-bottom: 1rem;">
+            <button type="button" id="delivery" class="btn btn-default dropdown-toggle btn-block" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false" style="height: 4.2rem;">
+                Choose Delivery Country ▼
+            </button>
+            <div class="dropdown-menu" style="width: 100%;">
+                <button class="dropdown-item2 btn-block" type="button">Action</button>
+                <button class="dropdown-item2 btn-block" type="button">Another action</button>
+                <button class="dropdown-item2 btn-block" type="button">Something else here</button>
+            </div>
+        </div>
+        <input type="button" value="Submit" onclick="SubmitAllForms()" class="btn btn-primary" style="width:100%;height: 4.5rem;">
+    </form>
+</div>
+<script>
+    function showStep2() {
+        const fName = document.getElementById('fName').value;
+        const regexFName = /^[A-Z][a-z]{2,20}$/g;
+        const testFName = regexFName.test(fName);
+
+        if (!testFName) {
+            document.getElementById('errorName').style = 'display:show;'
+        } else {
+            document.getElementById('errorName').style = 'display:none;'
+        }
+
+        const email = document.getElementById('email').value;
+        const regexEmail =
+            /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/g;
+        const testEmail = regexEmail.test(email);
+
+        if (!testEmail) {
+            document.getElementById('errorEmail').style = 'display:show;'
+        } else {
+            document.getElementById('errorEmail').style = 'display:none;'
+        }
+
+        if (testFName & testEmail) {
+            document.getElementById('step1').style = 'display:none;'
+            document.getElementById('step2').style = 'display:show;'
+        }
+    }
+
+    function showStep3() {
+        const cCountry = document.getElementById('collection').innerText;
+
+        if (cCountry === 'Choose Collection Country ▼') {
+            document.getElementById('errorCCountry').style = 'display:show;'
+        } else {
+            document.getElementById('step3').style = 'display:show;'
+            document.getElementById('step2').style = 'display:none;'
+        }
+    }
+
+    function SubmitAllForms() {
+        const dCountry = document.getElementById('delivery').innerText;
+
+        if (dCountry === 'Choose Delivery Country ▼') {
+            document.getElementById('errorDCountry').style = 'display:show;'
+        } else {
+            console.log("SUBMIT");
+        }
+    }
+</script>
